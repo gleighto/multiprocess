@@ -1,4 +1,4 @@
-#
+﻿#
 # Module for starting a process object using os.fork() or CreateProcess()
 #
 # multiprocessing/forking.py
@@ -479,7 +479,10 @@ def prepare(data):
         if main_name == '__init__':
             main_name = os.path.basename(os.path.dirname(main_path))
 
-        if main_name != 'ipython':
+        if main_name == '__main__':
+            main_module = sys.modules['__main__']
+            main_module.__file__ = main_path
+        elif main_name != 'ipython':
             import imp
 
             if main_path is None:
